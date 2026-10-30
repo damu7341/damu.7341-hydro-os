@@ -1,82 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
-</head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>HYDRO OS S1</title>
-
-    < link rel="stylesheet"href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-    </body>
-
-     <!-- Main desktop -->
+<body>
 
     <div class="desktop">
 
-        <!-- Header -->
-
-        <header>
-            <h1>HYDRO OS</h1>
-            <p>S1 EDITION</p>
+        <header class="topbar">
+            <h2>🚀 HYDRO OS S1</h2>
+            <span>Space Desktop</span>
         </header>
 
-        <!-- Welcome section -->
         <section class="welcome">
-            <h2>Welcome to HYDRO OS</h2>
-            <p>Your Space. Your System. Your Universe.</p>
+            <h1>Welcome to HYDRO OS</h1>
+            <p>Your personal space-themed operating system.</p>
         </section>
-
-        <!-- Widgets section -->
 
         <main class="widgets">
 
-            <!-- Clock -->
-
             <div class="widget">
-                <h2>Digital Clock</h2>
+                <h2>🕒 Digital Clock</h2>
                 <div id="clock">00:00:00</div>
                 <p id="date">Loading date...</p>
             </div>
 
-            <!-- Calculator -->
-
             <div class="widget">
-                <h2>Calculator</h2>
-
+                <h2>🧮 Calculator</h2>
                 <input type="text" id="display" readonly>
 
-                    <div id="calculator-buttons">
-                    <!-- Calculator buttons go here -->
+                <div class="calculator-buttons">
+                    <button onclick="clearDisplay()">C</button>
+                    <button onclick="appendValue('/')">÷</button>
+                    <button onclick="appendValue('*')">×</button>
+                    <button onclick="appendValue('-')">−</button>
+
+                    <button onclick="appendValue('7')">7</button>
+                    <button onclick="appendValue('8')">8</button>
+                    <button onclick="appendValue('9')">9</button>
+                    <button onclick="appendValue('+')">+</button>
+
+                    <button onclick="appendValue('4')">4</button>
+                    <button onclick="appendValue('5')">5</button>
+                    <button onclick="appendValue('6')">6</button>
+                    <button onclick="calculate()">=</button>
+
+                    <button onclick="appendValue('1')">1</button>
+                    <button onclick="appendValue('2')">2</button>
+                    <button onclick="appendValue('3')">3</button>
+                    <button onclick="appendValue('0')">0</button>
                 </div>
             </div>
 
-            <!-- Calendar -->
-
             <div class="widget">
-                <h2>Calendar</h2>
-                <div id="calendar">
-                    <!-- Calendar will appear here -->
-                </div>
+                <h2>📅 Calendar</h2>
+                <div id="calendar"></div>
             </div>
 
-            <!-- Terminal -->
-
             <div class="widget">
-                <h2>HYDRO Terminal</h2>
-
+                <h2>💻 HYDRO Terminal</h2>
                 <div id="terminal-output">
-                    HYDRO OS Terminal Started.
+                    Welcome to HYDRO OS Terminal!
+                    <br>Type help to see commands.
                 </div>
+
+                <input
+                    type="text"
+                    id="terminal-command"
+                    placeholder="Enter command..."
+                    onkeydown="handleCommand(event)"
+                >
+            </div>
 
         </main>
 
-          <!-- Footer -->
-
-        </footer>
-              <p>HYDRO OS S1 | Created by DAMU</p>
+        <footer>
+            <p>HYDRO OS S1 | Created by You 🚀</p>
         </footer>
 
     </div>
@@ -84,4 +87,4 @@
     <script src="script.js"></script>
 
 </body>
-    </html>
+</html>
