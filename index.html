@@ -1,210 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hydro OS</title>
-<style>
-*{box-sizing:border-box}
-body{
- margin:0;height:100vh;overflow:hidden;color:white;
- font-family:Inter,Arial,sans-serif;
- background:
- radial-gradient(ellipse at 75% 70%,#274b99 0%,transparent 35%),
- radial-gradient(ellipse at 25% 20%,#42217c 0%,transparent 40%),
- linear-gradient(145deg,#030611,#101b40 55%,#030611);
-}
-.stars{position:fixed;inset:0;pointer-events:none;
- background-image:radial-gradient(white 1px,transparent 1px);
- background-size:47px 53px;opacity:.35}
-.planet{position:fixed;width:240px;height:240px;border-radius:50%;
- right:13%;top:20%;background:linear-gradient(130deg,#9bbaff,#4933a0 55%,#101a48);
- box-shadow:0 0 70px #526dff77,inset -30px -20px 55px #05091d}
-.desktop{position:relative;height:calc(100vh - 60px);padding:20px}
-.brand{font-size:30px;font-weight:800;letter-spacing:3px}
-.sub{color:#a6b9ef;font-size:12px;margin-top:6px}
-.icons{display:flex;flex-direction:column;gap:22px;margin-top:35px;width:85px}
-.appicon{cursor:pointer;text-align:center;font-size:12px}
-.appicon span{display:grid;place-items:center;width:54px;height:54px;
- margin:0 auto 7px;border:1px solid #ffffff28;border-radius:16px;
- background:#ffffff13;backdrop-filter:blur(12px);font-size:25px}
-.window{position:absolute;top:12%;left:23%;width:min(540px,72vw);
- height:min(430px,65vh);border:1px solid #ffffff35;border-radius:15px;
- background:#10162bed;box-shadow:0 25px 90px #0009;overflow:hidden;
- backdrop-filter:blur(20px);display:none}
-.winhead{height:48px;display:flex;align-items:center;justify-content:space-between;
- padding:0 15px;background:#ffffff0b;border-bottom:1px solid #ffffff18}
-.close{border:0;color:white;background:#e45d70;border-radius:50%;width:13px;height:13px;cursor:pointer}
-.content{padding:18px;height:calc(100% - 48px);overflow:auto}
-#taskbar{position:fixed;bottom:0;left:0;right:0;height:60px;
- display:flex;align-items:center;gap:12px;padding:0 15px;
- background:#080d1cdd;border-top:1px solid #ffffff25;backdrop-filter:blur(20px)}
-#menuBtn{padding:10px 15px;border-radius:10px;background:#3154b9;
- color:white;border:0;font-weight:bold;cursor:pointer}
-.taskapp{background:#ffffff12;color:white;border:0;padding:10px;
- border-radius:9px;cursor:pointer}
-#clock{margin-left:auto;text-align:right;font-size:13px;line-height:1.5}
-#menu{position:fixed;display:none;bottom:70px;left:12px;width:250px;
- padding:15px;border:1px solid #ffffff2a;border-radius:16px;
- background:#10182cf5;box-shadow:0 15px 50px #0009}
-.menuitem{padding:12px;cursor:pointer;border-radius:8px}
-.menuitem:hover,.taskapp:hover{background:#ffffff24}
-h2{margin-top:0}
-.muted{color:#aab9d9}
-input,button,textarea{font:inherit}
-.terminal{font-family:monospace;color:#8fffc0;font-size:14px}
-#cmd{background:transparent;color:white;border:0;outline:0;width:80%}
-#output{white-space:pre-wrap;line-height:1.7}
-.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
-.day{padding:9px 2px;text-align:center;background:#ffffff0b;border-radius:6px}
-.day.today{background:#4269df}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hydro OS</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="stars"></div><div class="planet"></div>
 
-<main class="desktop">
- <div class="brand">HYDRO<span style="color:#71baff"> OS</span></div>
- <div class="sub">EXPLORE YOUR DIGITAL UNIVERSE</div>
+  <main class="desktop">
+    <header class="top-bar">
+      <h2>🚀 HYDRO OS</h2>
+      <div id="topClock">00:00:00</div>
+    </header>
 
- <div class="icons">
-  <div class="appicon" onclick="openApp('clock')"><span>◷</span>Clock</div>
-  <div class="appicon" onclick="openApp('calendar')"><span>▦</span>Calendar</div>
-  <div class="appicon" onclick="openApp('terminal')"><span>⌘</span>Terminal</div>
-  <div class="appicon" onclick="openApp('about')"><span>⚙</span>About OS</div>
- </div>
+    <section class="desktop-icons">
+      <button class="app-icon" data-app="clock">🕒<span>Clock</span></button>
+      <button class="app-icon" data-app="calendar">📅<span>Calendar</span></button>
+      <button class="app-icon" data-app="terminal">💻<span>Terminal</span></button>
+      <button class="app-icon" data-app="about">🌍<span>About</span></button>
+      <button class="app-icon" data-app="settings">⚙️<span>Settings</span></button>
+    </section>
 
- <section class="window" id="clock">
-  <div class="winhead">◷ Clock <button class="close" onclick="closeApps()"></button></div>
-  <div class="content" style="text-align:center;padding-top:60px">
-   <div class="muted">HYDRO SYSTEM TIME</div>
-   <h1 id="bigClock" style="font-size:55px;margin:18px 0">00:00:00</h1>
-   <div id="bigDate"></div>
-  </div>
- </section>
+    <section class="window" id="clock">
+      <div class="window-title">
+        <span>Digital Clock</span>
+        <button class="close-btn">×</button>
+      </div>
+      <div class="window-content">
+        <h1 id="bigClock">00:00:00</h1>
+        <p id="todayDate"></p>
+      </div>
+    </section>
 
- <section class="window" id="calendar">
-  <div class="winhead">▦ Calendar <button class="close" onclick="closeApps()"></button></div>
-  <div class="content">
-   <h2 id="month"></h2>
-   <div class="calgrid" id="calgrid"></div>
-   <p class="muted" id="selectedDate">Select a date</p>
-  </div>
- </section>
+    <section class="window" id="calendar">
+      <div class="window-title">
+        <span>Calendar</span>
+        <button class="close-btn">×</button>
+      </div>
+      <div class="window-content">
+        <div class="calendar-controls">
+          <button id="previousMonth">◀</button>
+          <h3 id="monthName"></h3>
+          <button id="nextMonth">▶</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+      </div>
+    </section>
 
- <section class="window" id="terminal">
-  <div class="winhead">⌘ Hydro Terminal <button class="close" onclick="closeApps()"></button></div>
-  <div class="content terminal">
-   <div id="output">Hydro Terminal v1.0
-Type help to see available commands.
-This is a simulated terminal.</div>
-   <p>hydro@space:~ $ <input id="cmd" autocomplete="off" autofocus></p>
-  </div>
- </section>
+    <section class="window" id="terminal">
+      <div class="window-title">
+        <span>Hydro Terminal</span>
+        <button class="close-btn">×</button>
+      </div>
+      <div class="window-content terminal-content">
+        <div id="terminalOutput">
+          Welcome to Hydro OS Terminal!<br>
+          Type help to see commands.
+        </div>
+        <div class="terminal-input">
+          <span>hydro&gt;</span>
+          <input id="terminalCommand" type="text"
+                 placeholder="Enter command..." autocomplete="off">
+        </div>
+      </div>
+    </section>
 
- <section class="window" id="about">
-  <div class="winhead">⚙ About Hydro OS <button class="close" onclick="closeApps()"></button></div>
-  <div class="content">
-   <h2>Hydro OS 1.0</h2>
-   <p>A space-inspired web desktop.</p>
-   <p class="muted">Interface: Hydro Shell</p>
-   <p>Built-in apps: Clock, Calendar, Terminal</p>
-   <p>Optional AI concept: 15% of the planned feature set.</p>
-   <p class="muted">No AI service is connected in this demo.</p>
-  </div>
- </section>
-</main>
+    <section class="window" id="about">
+      <div class="window-title">
+        <span>About Hydro OS</span>
+        <button class="close-btn">×</button>
+      </div>
+      <div class="window-content">
+        <h2>🌌 Hydro OS</h2>
+        <p>A space-themed desktop project.</p>
+        <p>Designed and developed as a student project.</p>
+        <p>Dream beyond the stars, build beyond limits!</p>
+      </div>
+    </section>
 
-<nav id="taskbar">
- <button id="menuBtn" onclick="toggleMenu()">✦ Hydro</button>
- <button class="taskapp" onclick="openApp('clock')">◷</button>
- <button class="taskapp" onclick="openApp('calendar')">▦</button>
- <button class="taskapp" onclick="openApp('terminal')">⌘</button>
- <div id="clock">Loading...</div>
-</nav>
+    <section class="window" id="settings">
+      <div class="window-title">
+        <span>Settings</span>
+        <button class="close-btn">×</button>
+      </div>
+      <div class="window-content">
+        <h3>Desktop Settings</h3>
+        <p>Choose a wallpaper image from your device:</p>
+        <input type="file" id="wallpaperPicker" accept="image/*">
+        <p class="small-note">Your selected image becomes the desktop background.</p>
+      </div>
+    </section>
 
-<div id="menu">
- <h3 style="padding-left:10px">✦ Hydro OS</h3>
- <div class="menuitem" onclick="openApp('clock')">◷ &nbsp; Clock</div>
- <div class="menuitem" onclick="openApp('calendar')">▦ &nbsp; Calendar</div>
- <div class="menuitem" onclick="openApp('terminal')">⌘ &nbsp; Terminal</div>
- <div class="menuitem" onclick="openApp('about')">⚙ &nbsp; About Hydro OS</div>
-</div>
+    <nav class="start-menu" id="startMenu">
+      <h3>🚀 Hydro OS</h3>
+      <button data-app="clock">🕒 Clock</button>
+      <button data-app="calendar">📅 Calendar</button>
+      <button data-app="terminal">💻 Terminal</button>
+      <button data-app="about">🌍 About</button>
+      <button data-app="settings">⚙️ Settings</button>
+    </nav>
 
-<script>
-const $=id=>document.getElementById(id);
+    <footer class="taskbar">
+      <button id="startButton">🌌 Start</button>
+      <span class="taskbar-label">HYDRO OS</span>
+      <span id="taskbarClock">00:00</span>
+    </footer>
+  </main>
 
-function updateTime(){
- const now=new Date();
- const time=now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
- const date=now.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});
- $('clock').innerHTML=time+'<br>'+date;
- $('bigClock').textContent=time;
- $('bigDate').textContent=now.toLocaleDateString([],{
-  weekday:'long',year:'numeric',month:'long',day:'numeric'
- });
-}
-setInterval(updateTime,1000);updateTime();
-
-function closeApps(){
- document.querySelectorAll('.window').forEach(w=>w.style.display='none');
-}
-function openApp(id){
- closeApps();
- $(id).style.display='block';
- $('menu').style.display='none';
-}
-function toggleMenu(){
- $('menu').style.display=$('menu').style.display==='block'?'none':'block';
-}
-
-function drawCalendar(){
- const now=new Date(),year=now.getFullYear(),month=now.getMonth();
- $('month').textContent=now.toLocaleDateString([], {month:'long',year:'numeric'});
- const grid=$('calgrid');grid.innerHTML='';
- ['S','M','T','W','T','F','S'].forEach(d=>{
-  const el=document.createElement('div');el.textContent=d;
-  el.className='day muted';grid.appendChild(el);
- });
- const offset=new Date(year,month,1).getDay();
- const count=new Date(year,month+1,0).getDate();
- for(let i=0;i<offset;i++)grid.appendChild(document.createElement('div'));
- for(let d=1;d<=count;d++){
-  const el=document.createElement('div');el.textContent=d;el.className='day';
-  if(d===now.getDate())el.classList.add('today');
-  el.style.cursor='pointer';
-  el.onclick=()=> $('selectedDate').textContent=
-   new Date(year,month,d).toLocaleDateString([],{
-    weekday:'long',year:'numeric',month:'long',day:'numeric'
-   });
-  grid.appendChild(el);
- }
-}
-drawCalendar();
-
-const output=$('output'),cmd=$('cmd');
-cmd.addEventListener('keydown',e=>{
- if(e.key!=='Enter')return;
- const raw=cmd.value.trim();cmd.value='';
- if(!raw)return;
- const parts=raw.split(' '),name=parts[0].toLowerCase();
- let result='';
- switch(name){
-  case 'help':result='Available commands:\\nhelp, date, time, clear, about, apps, echo';break;
-  case 'date':result=new Date().toDateString();break;
-  case 'time':result=new Date().toLocaleTimeString();break;
-  case 'about':result='Hydro OS 1.0 — browser desktop prototype';break;
-  case 'apps':result='Clock | Calendar | Terminal | About OS';break;
-  case 'echo':result=raw.slice(5);break;
-  case 'clear':output.textContent='';return;
-  default:result='Command not found: '+name+'\\nType help for commands.';
- }
- output.textContent+='\\n\\nhydro@space:~ $ '+raw+'\\n'+result;
- output.parentElement.scrollTop=output.parentElement.scrollHeight;
-});
-document.addEventListener('keydown',e=>{
- if(e.key==='Escape'){closeApps();$('menu').style.display='none';}
-});
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
