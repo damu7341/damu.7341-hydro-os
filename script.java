@@ -1,265 +1,204 @@
-/* =====================================
-   HYDRO OS — JAVASCRIPT SYSTEM
-   ===================================== */
+// HYDRO OS - Main JavaScript file
 
-// Helper function
-const $ = id => document.getElementById(id);
+const windows = document.querySelectorAll(".window");
+const appButtons = document.querySelectorAll("[data-app]");
+const startButton = document.getElementById("startButton");
+const startMenu = document.getElementById("startMenu");
 
+// Open an application window
+function openApp(appName) {
+  windows.forEach(function (win) {
+    win.style.display = "none";
+  });
 
-// 1. LIVE CLOCK AND DATE
+  const selectedWindow = document.getElementById(appName);
 
-function updateTime() {
-    const now = new Date();
+  if (selectedWindow) {
+    selectedWindow.style.display = "block";
+  }
 
-    const time = now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit"
-    });
-
-    const date = now.toLocaleDateString([], {
-        weekday: "short",
-        month: "short",
-        day: "numeric"
-    });
-
-    // Taskbar clock
-    const taskbarClock = $("clock");
-
-    if (taskbarClock) {
-        taskbarClock.innerHTML = `${time}<br>${date}`;
-    }
-
-    // Clock application
-    const bigClock = $("bigClock");
-    const bigDate = $("bigDate");
-
-    if (bigClock) bigClock.textContent = time;
-
-    if (bigDate) {
-        bigDate.textContent = now.toLocaleDateString([], {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-        });
-    }
+  startMenu.style.display = "none";
 }
 
-updateTime();
-setInterval(updateTime, 1000);
+// Close buttons
+document.querySelectorAll(".close-btn").forEach(function (button) {
+  button.addEventListener("click", function () {
+    button.closest(".window").style.display = "none";
+  });
+});
 
+// App icons and start menu buttons
+appButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    openApp(button.dataset.app);
+  });
+});
 
-// 2. APPLICATION WINDOW SYSTEM
+// Start menu
+startButton.addEventListener("click", function () {
+  startMenu.style.display =
+    startMenu.style.display === "block" ? "none" : "block";
+});
 
-function closeApps() {
-    document.querySelectorAll(".window").forEach(window => {
-        window.style.display = "none";
-    });
+// Live clock
+function updateClock() {
+  const now = new Date();
+
+  const time = now.toLocaleTimeString();
+  const shortTime = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  document.getElementById("topClock").textContent = time;
+  document.getElementById("bigClock").textContent = time;
+  document.getElementById("taskbarClock").textContent = shortTime;
+
+  document.getElementById("todayDate").textContent =
+    now.toDateString();
 }
 
-function openApp(id) {
-    const app = $(id);
+updateClock();
+setInterval(updateClock, 1000);
 
-    if (!app) {
-        console.warn("Application not found:", id);
-        return;
-    }
-
-    closeApps();
-
-    app.style.display = "block";
-
-    const menu = $("menu");
-    if (menu) menu.style.display = "none";
-
-    // Focus terminal input when opened
-    if (id === "terminal") {
-        setTimeout(() => $("cmd")?.focus(), 50);
-    }
-}
-
-
-// 3. HYDRO START MENU
-
-function toggleMenu() {
-    const menu = $("menu");
-
-    if (!menu) return;
-
-    menu.style.display =
-        menu.style.display === "block"
-            ? "none"
-            : "block";
-}
-
-
-// 4. CALENDAR APPLICATION
+// Calendar
+let calendarDate = new Date();
 
 function drawCalendar() {
-    const monthTitle = $("month");
-    const grid = $("calgrid");
+  const year = calendarDate.getFullYear();
+  const month = calendarDate.getMonth();
 
-    if (!monthTitle || !grid) return;
+  const firstDay = new Date(year, month, 1).getDay();
+  const totalDays = new Date(year, month + 1, 0).getDate();
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = now.getMonth();
+  const monthName = document.getElementById("monthName");
+  const calendarGrid = document.getElementById("calendarGrid");
 
-    monthTitle.textContent = now.toLocaleDateString([], {
-        month: "long",
-        year: "numeric"
-    });
+  monthName.textContent = calendarDate.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
 
-    grid.replaceChildren();
+  calendarGrid.innerHTML = "";
 
-    // Weekday headings
-    ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-        .forEach(day => {
-            const cell = document.createElement("div");
-            cell.className = "day muted";
-            cell.textContent = day;
-            grid.appendChild(cell);
-        });
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-    const firstDay = new Date(year, month, 1).getDay();
-    const totalDays = new Date(year, month + 1, 0).getDate();
+  weekdays.forEach(function (day) {
+    const cell = document.createElement("div");
+    cell.textContent = day;
+    calendarGrid.appendChild(cell);
+  });
 
-    // Empty spaces before the first day
-    for (let i = 0; i < firstDay; i++) {
-        grid.appendChild(document.createElement("div"));
+  for (let i = 0; i < firstDay; i++) {
+    calendarGrid.appendChild(document.createElement("div"));
+  }
+
+  for (let day = 1; day <= totalDays; day++) {
+    const cell = document.createElement("div");
+    cell.textContent = day;
+
+    const today = new Date();
+
+    if (
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear()
+    ) {
+      cell.classList.add("today");
     }
 
-    // Calendar dates
-    for (let day = 1; day <= totalDays; day++) {
-        const cell = document.createElement("div");
-
-        cell.className = "day";
-        cell.textContent = day;
-        cell.style.cursor = "pointer";
-
-        if (day === now.getDate()) {
-            cell.classList.add("today");
-        }
-
-        cell.addEventListener("click", () => {
-            const selected = $("selectedDate");
-
-            if (selected) {
-                selected.textContent =
-                    new Date(year, month, day).toLocaleDateString([], {
-                        weekday: "long",
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric"
-                    });
-            }
-        });
-
-        grid.appendChild(cell);
-    }
+    calendarGrid.appendChild(cell);
+  }
 }
+
+document.getElementById("previousMonth").addEventListener("click", function () {
+  calendarDate.setMonth(calendarDate.getMonth() - 1);
+  drawCalendar();
+});
+
+document.getElementById("nextMonth").addEventListener("click", function () {
+  calendarDate.setMonth(calendarDate.getMonth() + 1);
+  drawCalendar();
+});
 
 drawCalendar();
 
-
-// 5. BASIC HYDRO TERMINAL
-
-const output = $("output");
-const commandInput = $("cmd");
+// Simple terminal commands
+const terminalInput = document.getElementById("terminalCommand");
+const terminalOutput = document.getElementById("terminalOutput");
 
 function runCommand(command) {
-    const parts = command.trim().split(/\s+/);
-    const name = (parts[0] || "").toLowerCase();
-    const argument = command.trim().slice(name.length).trim();
+  const answer = document.createElement("p");
+  const typed = document.createElement("p");
 
-    switch (name) {
-        case "help":
-            return [
-                "HYDRO OS TERMINAL COMMANDS",
-                "help   - Show available commands",
-                "date   - Show current date",
-                "time   - Show current time",
-                "clear  - Clear terminal",
-                "about  - About Hydro OS",
-                "apps   - List applications",
-                "echo   - Print a message"
-            ].join("\n");
+  typed.textContent = "hydro> " + command;
+  terminalOutput.appendChild(typed);
 
-        case "date":
-            return new Date().toDateString();
+  switch (command.toLowerCase().trim()) {
+    case "help":
+      answer.textContent =
+        "Commands: help, date, time, about, clear";
+      break;
 
-        case "time":
-            return new Date().toLocaleTimeString();
+    case "date":
+      answer.textContent = new Date().toDateString();
+      break;
 
-        case "about":
-            return "Hydro OS 1.0 — Space Desktop Prototype";
+    case "time":
+      answer.textContent = new Date().toLocaleTimeString();
+      break;
 
-        case "apps":
-            return "Clock | Calendar | Terminal | About OS";
+    case "about":
+      answer.textContent = "Welcome to Hydro OS - Space Desktop Project.";
+      break;
 
-        case "echo":
-            return argument;
+    case "clear":
+      terminalOutput.innerHTML = "";
+      return;
 
-        case "clear":
-            if (output) output.textContent = "";
-            return null;
+    case "":
+      return;
 
-        case "":
-            return null;
+    default:
+      answer.textContent = "Command not found. Type help.";
+  }
 
-        default:
-            return `Command not found: ${name}\nType help to see commands.`;
-    }
+  terminalOutput.appendChild(answer);
 }
 
-if (commandInput && output) {
-    commandInput.addEventListener("keydown", event => {
-        if (event.key !== "Enter") return;
-
-        const command = commandInput.value.trim();
-        commandInput.value = "";
-
-        if (!command) return;
-
-        const result = runCommand(command);
-
-        if (result !== null) {
-            output.textContent +=
-                `\n\nhydro@space:~ $ ${command}\n${result}`;
-        }
-
-        // Scroll to the latest output
-        output.parentElement.scrollTop =
-            output.parentElement.scrollHeight;
-    });
-}
-
-
-// 6. KEYBOARD SHORTCUTS
-
-document.addEventListener("keydown", event => {
-    // Escape closes applications and menu
-    if (event.key === "Escape") {
-        closeApps();
-
-        const menu = $("menu");
-        if (menu) menu.style.display = "none";
-    }
-
-    // Ctrl + Alt + T opens Terminal
-    if (
-        event.ctrlKey &&
-        event.altKey &&
-        event.key.toLowerCase() === "t"
-    ) {
-        event.preventDefault();
-        openApp("terminal");
-    }
+terminalInput.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    runCommand(terminalInput.value);
+    terminalInput.value = "";
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+  }
 });
 
+// Choose a wallpaper from your device
+document.getElementById("wallpaperPicker").addEventListener(
+  "change",
+  function (event) {
+    const file = event.target.files[0];
 
-// 7. HYDRO OS INITIALIZATION
+    if (file && file.type.startsWith("image/")) {
+      const imageURL = URL.createObjectURL(file);
+      document.querySelector(".desktop").style.backgroundImage =
+        `linear-gradient(rgba(3,8,30,.2), rgba(3,8,30,.4)), url("${imageURL}")`;
+    }
+  }
+);
 
-console.log("Hydro OS initialized successfully.");
-console.log("Welcome to your digital universe!");
+// Keyboard shortcuts
+document.addEventListener("keydown", function (event) {
+  if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "t") {
+    openApp("terminal");
+  }
+
+  if (event.key === "Escape") {
+    windows.forEach(function (win) {
+      win.style.display = "none";
+    });
+
+    startMenu.style.display = "none";
+  }
+});
