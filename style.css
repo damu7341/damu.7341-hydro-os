@@ -13,9 +13,24 @@ body {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background:
-    linear-gradient(rgba(3, 8, 30, 0.25), rgba(3, 8, 30, 0.45)),
-    url("assets/space-wallpaper.jpg") center / cover no-repeat;
+  background-color: #050816;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, white, transparent),
+    radial-gradient(1.2px 1.2px at 28% 42%, #e0e0ff, transparent),
+    radial-gradient(1px 1px at 45% 15%, white, transparent),
+    radial-gradient(1.4px 1.4px at 62% 35%, #fff, transparent),
+    radial-gradient(1px 1px at 78% 22%, white, transparent),
+    radial-gradient(1.6px 1.6px at 88% 58%, #d0d8ff, transparent),
+    radial-gradient(1.1px 1.1px at 15% 72%, white, transparent),
+    radial-gradient(1.3px 1.3px at 35% 85%, #eee, transparent),
+    radial-gradient(1px 1px at 55% 68%, white, transparent),
+    radial-gradient(1.5px 1.5px at 72% 78%, #f0f0ff, transparent),
+    radial-gradient(1.2px 1.2px at 92% 82%, white, transparent),
+    radial-gradient(ellipse at 20% 30%, rgba(90, 40, 180, 0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 75% 65%, rgba(40, 90, 200, 0.28) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(15, 25, 70, 0.6) 0%, transparent 70%);
+  background-size: cover;
+  background-position: center;
 }
 
 .top-bar {
