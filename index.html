@@ -1,112 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hydro OS</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hydro OS</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <main class="desktop">
-    <header class="top-bar">
-      <h2>HYDRO OS</h2>
-      <div id="topClock">00:00:00</div>
-    </header>
-
-    <section class="desktop-icons">
-      <button class="app-icon" data-app="clock">🕒<span>Clock</span></button>
-      <button class="app-icon" data-app="calendar">📅<span>Calendar</span></button>
-      <button class="app-icon" data-app="terminal">💻<span>Terminal</span></button>
-      <button class="app-icon" data-app="about">🌐<span>About</span></button>
-      <button class="app-icon" data-app="settings">⚙️<span>Settings</span></button>
-    </section>
-
-    <section class="window" id="clock">
-      <div class="window-title">
-        <span>Digital Clock</span>
-        <button class="close-btn">×</button>
-      </div>
-      <div class="window-content">
-        <h1 id="bigClock">00:00:00</h1>
-        <p id="todayDate"></p>
-      </div>
-    </section>
-
-    <section class="window" id="calendar">
-      <div class="window-title">
-        <span>Calendar</span>
-        <button class="close-btn">×</button>
-      </div>
-      <div class="window-content">
-        <div class="calendar-controls">
-          <button id="previousMonth">Previous</button>
-          <h3 id="monthName"></h3>
-          <button id="nextMonth">Next</button>
+    <!-- Desktop Workspace -->
+    <div id="desktop">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" onclick="openWindow('about-window')">
+            <div class="icon-img">🪐</div>
+            <span>About OS</span>
         </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
-      </div>
-    </section>
-
-    <section class="window" id="terminal">
-      <div class="window-title">
-        <span>Hydro Terminal</span>
-        <button class="close-btn">×</button>
-      </div>
-      <div class="window-content terminal-content">
-        <div id="terminalOutput">
-          Welcome to Hydro OS Terminal!<br>
-          Type help to see commands.
+        <div class="desktop-icon" onclick="openWindow('terminal-window')">
+            <div class="icon-img">💻</div>
+            <span>Terminal</span>
         </div>
-        <div class="terminal-input">
-          <span>hydro></span>
-          <input id="terminalCommand" type="text" placeholder="Enter command..." autocomplete="off">
+    </div>
+
+    <!-- Windows / Apps -->
+    <div id="about-window" class="window">
+        <div class="window-header">
+            <span>About Hydro OS</span>
+            <button class="close-btn" onclick="closeWindow('about-window')">&times;</button>
         </div>
-      </div>
-    </section>
+        <div class="window-body">
+            <h2>Welcome to Hydro OS</h2>
+            <p>Explore your digital universe. Built with pure HTML, CSS, and JS.</p>
+        </div>
+    </div>
 
-    <section class="window" id="about">
-      <div class="window-title">
-        <span>About Hydro OS</span>
-        <button class="close-btn">×</button>
-      </div>
-      <div class="window-content">
-        <h2>Hydro OS</h2>
-        <p>A space-themed desktop project.</p>
-        <p>Designed and developed as a student project.</p>
-        <p>Dream beyond the stars, build beyond limits!</p>
-      </div>
-    </section>
+    <div id="terminal-window" class="window">
+        <div class="window-header">
+            <span>Terminal</span>
+            <button class="close-btn" onclick="closeWindow('terminal-window')">&times;</button>
+        </div>
+        <div class="window-body terminal-body">
+            <p>Hydro OS v1.0.0 (x86_web-server)</p>
+            <p>Type 'help' for available commands.</p>
+            <div id="terminal-output"></div>
+            <div class="terminal-input-line">
+                <span>guest@hydro-os:~$</span>
+                <input type="text" id="terminal-input" autofocus autocomplete="off" onkeypress="handleTerminal(event)">
+            </div>
+        </div>
+    </div>
 
-    <section class="window" id="settings">
-      <div class="window-title">
-        <span>Settings</span>
-        <button class="close-btn">×</button>
-      </div>
-      <div class="window-content">
-        <h3>Desktop Settings</h3>
-        <p>Choose a wallpaper image from your device:</p>
-        <input type="file" id="wallpaperPicker" accept="image/*">
-        <p class="small-note">Your selected image becomes the desktop background.</p>
-      </div>
-    </section>
+    <!-- Taskbar -->
+    <div id="taskbar">
+        <button id="start-btn" onclick="toggleMenu()">💧 Start</button>
+        <div id="taskbar-apps"></div>
+        <div id="clock">00:00</div>
+    </div>
 
-    <nav class="start-menu" id="startMenu">
-      <h3>Hydro OS</h3>
-      <button data-app="clock">Clock</button>
-      <button data-app="calendar">Calendar</button>
-      <button data-app="terminal">Terminal</button>
-      <button data-app="about">About</button>
-      <button data-app="settings">Settings</button>
-    </nav>
-
-    <footer class="taskbar">
-      <button id="startButton">Start</button>
-      <span class="taskbar-label">HYDRO OS</span>
-      <span id="taskbarClock">00:00</span>
-    </footer>
-  </main>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
