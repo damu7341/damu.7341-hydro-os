@@ -13,80 +13,78 @@ body {
   width: 100vw;
   height: 100vh;
   position: relative;
-  background-color: #050816;
+  background-color: #070b1f;
   background-image:
-    radial-gradient(1.5px 1.5px at 12% 18%, white, transparent),
-    radial-gradient(1.2px 1.2px at 28% 42%, #e0e0ff, transparent),
-    radial-gradient(1px 1px at 45% 15%, white, transparent),
-    radial-gradient(1.4px 1.4px at 62% 35%, #fff, transparent),
-    radial-gradient(1px 1px at 78% 22%, white, transparent),
-    radial-gradient(1.6px 1.6px at 88% 58%, #d0d8ff, transparent),
-    radial-gradient(1.1px 1.1px at 15% 72%, white, transparent),
-    radial-gradient(1.3px 1.3px at 35% 85%, #eee, transparent),
-    radial-gradient(1px 1px at 55% 68%, white, transparent),
-    radial-gradient(1.5px 1.5px at 72% 78%, #f0f0ff, transparent),
-    radial-gradient(1.2px 1.2px at 92% 82%, white, transparent),
-    radial-gradient(ellipse at 20% 30%, rgba(90, 40, 180, 0.35) 0%, transparent 55%),
-    radial-gradient(ellipse at 75% 65%, rgba(40, 90, 200, 0.28) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(15, 25, 70, 0.6) 0%, transparent 70%);
+    radial-gradient(1.5px 1.5px at 10% 20%, white, transparent),
+    radial-gradient(1px 1px at 25% 40%, #ddd, transparent),
+    radial-gradient(1.2px 1.2px at 40% 15%, white, transparent),
+    radial-gradient(1px 1px at 60% 30%, white, transparent),
+    radial-gradient(1.4px 1.4px at 75% 50%, #eee, transparent),
+    radial-gradient(1px 1px at 90% 25%, white, transparent),
+    radial-gradient(1.3px 1.3px at 15% 70%, white, transparent),
+    radial-gradient(1px 1px at 35% 80%, white, transparent),
+    radial-gradient(1.2px 1.2px at 55% 65%, #f5f5ff, transparent),
+    radial-gradient(1px 1px at 80% 75%, white, transparent),
+    radial-gradient(ellipse at 25% 35%, rgba(100, 50, 180, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(50, 100, 200, 0.25) 0%, transparent 50%);
   background-size: cover;
   background-position: center;
 }
 
 .top-bar {
   height: 55px;
-  padding: 0 22px;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(5, 15, 40, 0.65);
-  backdrop-filter: blur(12px);
+  background: rgba(5, 15, 40, 0.7);
+  backdrop-filter: blur(10px);
 }
 
 .top-bar h2 {
   font-size: 18px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .desktop-icons {
   display: grid;
   grid-template-columns: 90px;
-  gap: 18px;
-  padding: 25px;
+  gap: 16px;
+  padding: 20px;
 }
 
 .app-icon {
-  border: 0;
+  border: none;
   background: transparent;
   color: white;
-  font-size: 32px;
+  font-size: 30px;
   cursor: pointer;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 8px;
+  border-radius: 8px;
 }
 
 .app-icon span {
   display: block;
-  font-size: 13px;
-  margin-top: 7px;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 .app-icon:hover {
-  background: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .window {
   display: none;
   position: absolute;
-  top: 16%;
-  left: 30%;
-  width: min(430px, 85vw);
-  min-height: 230px;
-  background: rgba(9, 20, 48, 0.88);
-  border: 1px solid rgba(120, 190, 255, 0.6);
-  border-radius: 13px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(18px);
+  top: 15%;
+  left: 28%;
+  width: min(420px, 85vw);
+  min-height: 220px;
+  background: rgba(10, 20, 45, 0.9);
+  border: 1px solid rgba(100, 180, 255, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
   overflow: hidden;
 }
 
@@ -94,26 +92,26 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: rgba(35, 95, 160, 0.55);
+  padding: 10px 15px;
+  background: rgba(30, 80, 140, 0.5);
   font-weight: bold;
 }
 
 .close-btn {
-  border: 0;
+  border: none;
   background: transparent;
   color: white;
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
 }
 
 .window-content {
-  padding: 20px;
+  padding: 18px;
 }
 
 #bigClock {
   text-align: center;
-  font-size: 40px;
+  font-size: 38px;
   color: #70d9ff;
 }
 
@@ -126,24 +124,24 @@ body {
 .calendar-controls button {
   background: #176caa;
   color: white;
-  border: 0;
-  padding: 8px;
+  border: none;
+  padding: 7px 10px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  margin-top: 15px;
+  gap: 4px;
+  margin-top: 12px;
   text-align: center;
 }
 
 .calendar-grid div {
-  padding: 8px 2px;
-  border-radius: 5px;
-  background: rgba(255, 255, 255, 0.08);
+  padding: 7px 2px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.07);
 }
 
 .calendar-grid .today {
@@ -153,19 +151,18 @@ body {
 
 .terminal-content {
   font-family: monospace;
-  min-height: 170px;
+  min-height: 160px;
   color: #8df7ad;
 }
 
 .terminal-input {
   display: flex;
-  gap: 8px;
-  margin-top: 15px;
+  gap: 6px;
+  margin-top: 12px;
 }
 
 .terminal-input input {
   flex: 1;
-  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
@@ -176,29 +173,29 @@ body {
 .start-menu {
   display: none;
   position: absolute;
-  bottom: 65px;
-  left: 12px;
-  width: 220px;
-  padding: 15px;
-  border-radius: 12px;
-  background: rgba(5, 20, 50, 0.94);
-  border: 1px solid rgba(120, 190, 255, 0.5);
+  bottom: 60px;
+  left: 10px;
+  width: 200px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(5, 18, 45, 0.95);
+  border: 1px solid rgba(100, 180, 255, 0.4);
 }
 
 .start-menu button {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 11px;
-  margin-top: 5px;
+  padding: 10px;
+  margin-top: 4px;
   color: white;
   background: transparent;
-  border: 0;
+  border: none;
   cursor: pointer;
 }
 
 .start-menu button:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
 }
 
 .taskbar {
@@ -206,43 +203,42 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 55px;
+  height: 52px;
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 0 15px;
-  background: rgba(3, 12, 35, 0.82);
-  backdrop-filter: blur(15px);
+  gap: 15px;
+  padding: 0 12px;
+  background: rgba(3, 10, 30, 0.85);
+  backdrop-filter: blur(12px);
 }
 
 #startButton {
-  padding: 10px 16px;
+  padding: 8px 14px;
   background: #126da8;
-  border: 0;
+  border: none;
   color: white;
-  border-radius: 7px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
 .taskbar-label {
   flex: 1;
   font-size: 13px;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
 }
 
 .small-note {
   font-size: 12px;
-  color: #c6d9ed;
+  color: #b8d0e8;
 }
 
 @media (max-width: 600px) {
   .window {
     left: 5%;
-    top: 15%;
+    top: 14%;
     width: 90%;
   }
-
   .desktop-icons {
-    grid-template-columns: repeat(2, 85px);
+    grid-template-columns: repeat(2, 80px);
   }
 }
