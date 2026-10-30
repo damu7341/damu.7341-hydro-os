@@ -1,144 +1,51 @@
-const windows = document.querySelectorAll(".window");
-const appButtons = document.querySelectorAll("[data-app]");
-const startButton = document.getElementById("startButton");
-const startMenu = document.getElementById("startMenu");
-
-function openApp(appName) {
-  windows.forEach(function(win) {
-    win.style.display = "none";
-  });
-  var selected = document.getElementById(appName);
-  if (selected) {
-    selected.style.display = "block";
-  }
-  startMenu.style.display = "none";
+// Open and close window functions
+function openWindow(windowId) {
+    const win = document.getElementById(windowId);
+    win.style.display = 'flex';
+    win.style.zIndex = Date.now(); // Bring to front
 }
 
-document.querySelectorAll(".close-btn").forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    btn.closest(".window").style.display = "none";
-  });
-});
+function closeWindow(windowId) {
+    const win = document.getElementById(windowId);
+    win.style.display = 'none';
+}
 
-appButtons.forEach(function(btn) {
-  btn.addEventListener("click", function() {
-    openApp(btn.dataset.app);
-  });
-});
-
-startButton.addEventListener("click", function() {
-  if (startMenu.style.display === "block") {
-    startMenu.style.display = "none";
-  } else {
-    startMenu.style.display = "block";
-  }
-});
-
+// Simple live clock in the taskbar
 function updateClock() {
-  var now = new Date();
-  var time = now.toLocaleTimeString();
-  var shortTime = now.toLocaleTimeString([], {hour: "2-digit", minute: "2-digit"});
-  document.getElementById("topClock").textContent = time;
-  document.getElementById("bigClock").textContent = time;
-  document.getElementById("taskbarClock").textContent = shortTime;
-  document.getElementById("todayDate").textContent = now.toDateString();
+    const now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes();
+    hours = hours < 10 ? '0' + hours : hours;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    document.getElementById('clock').innerText = `${hours}:${minutes}`;
 }
-updateClock();
 setInterval(updateClock, 1000);
+updateClock();
 
-var calendarDate = new Date();
+// Basic interactive terminal commands
+function handleTerminal(event) {
+    if (event.key === 'Enter') {
+        const inputField = document.getElementById('terminal-input');
+        const outputDiv = document.getElementById('terminal-output');
+        const command = inputField.value.trim();
 
-function drawCalendar() {
-  var year = calendarDate.getFullYear();
-  var month = calendarDate.getMonth();
-  var firstDay = new Date(year, month, 1).getDay();
-  var totalDays = new Date(year, month + 1, 0).getDate();
-  var monthName = document.getElementById("monthName");
-  var calendarGrid = document.getElementById("calendarGrid");
-  monthName.textContent = calendarDate.toLocaleDateString("en-US", {month: "long", year: "numeric"});
-  calendarGrid.innerHTML = "";
-  var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  weekdays.forEach(function(day) {
-    var cell = document.createElement("div");
-    cell.textContent = day;
-    calendarGrid.appendChild(cell);
-  });
-  for (var i = 0; i < firstDay; i++) {
-    calendarGrid.appendChild(document.createElement("div"));
-  }
-  for (var day = 1; day <= totalDays; day++) {
-    var cell = document.createElement("div");
-    cell.textContent = day;
-    var today = new Date();
-    if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-      cell.classList.add("today");
+        outputDiv.innerHTML += `<div>guest@hydro-os:~$ ${command}</div>`;
+
+        if (command === 'help') {
+            outputDiv.innerHTML += `<div>Available commands: clear, about, date, echo [text]</div>`;
+        } else if (command === 'clear') {
+            outputDiv.innerHTML = '';
+        } else if (command === 'about') {
+            outputDiv.innerHTML += `<div>Hydro OS v1.0 - A custom web operating system project.</div>`;
+        } else if (command === 'date') {
+            outputDiv.innerHTML += `<div>${new Date()}</div>`;
+        } else if (command.startsWith('echo ')) {
+            outputDiv.innerHTML += `<div>${command.substring(5)}</div>`;
+        } else if (command !== '') {
+            outputDiv.innerHTML += `<div>Command not found: ${command}. Type 'help' for assistance.</div>`;
+        }
+
+        inputField.value = '';
+        outputDiv.scrollTop = outputDiv.scrollHeight;
     }
-    calendarGrid.appendChild(cell);
-  }
 }
-
-document.getElementById("previousMonth").addEventListener("click", function() {
-  calendarDate.setMonth(calendarDate.getMonth() - 1);
-  drawCalendar();
-});
-document.getElementById("nextMonth").addEventListener("click", function() {
-  calendarDate.setMonth(calendarDate.getMonth() + 1);
-  drawCalendar();
-});
-drawCalendar();
-
-var terminalInput = document.getElementById("terminalCommand");
-var terminalOutput = document.getElementById("terminalOutput");
-
-function runCommand(command) {
-  var typed = document.createElement("p");
-  typed.textContent = "hydro> " + command;
-  terminalOutput.appendChild(typed);
-  var answer = document.createElement("p");
-  var cmd = command.toLowerCase().trim();
-  if (cmd === "help") {
-    answer.textContent = "Commands: help, date, time, about, clear";
-  } else if (cmd === "date") {
-    answer.textContent = new Date().toDateString();
-  } else if (cmd === "time") {
-    answer.textContent = new Date().toLocaleTimeString();
-  } else if (cmd === "about") {
-    answer.textContent = "Welcome to Hydro OS - Space Desktop Project.";
-  } else if (cmd === "clear") {
-    terminalOutput.innerHTML = "";
-    return;
-  } else if (cmd === "") {
-    return;
-  } else {
-    answer.textContent = "Command not found. Type help.";
-  }
-  terminalOutput.appendChild(answer);
-}
-
-terminalInput.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    runCommand(terminalInput.value);
-    terminalInput.value = "";
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-  }
-});
-
-document.getElementById("wallpaperPicker").addEventListener("change", function(event) {
-  var file = event.target.files[0];
-  if (file && file.type.startsWith("image/")) {
-    var imageURL = URL.createObjectURL(file);
-    document.querySelector(".desktop").style.backgroundImage = "linear-gradient(rgba(3,8,30,.2), rgba(3,8,30,.4)), url(" + imageURL + ")";
-  }
-});
-
-document.addEventListener("keydown", function(event) {
-  if (event.ctrlKey && event.altKey && event.key.toLowerCase() === "t") {
-    openApp("terminal");
-  }
-  if (event.key === "Escape") {
-    windows.forEach(function(win) {
-      win.style.display = "none";
-    });
-    startMenu.style.display = "none";
-  }
-});
