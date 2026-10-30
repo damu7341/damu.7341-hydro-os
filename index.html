@@ -1,61 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydro OS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- Desktop Workspace -->
     <div id="desktop">
-        <!-- Desktop Icons -->
-        <div class="desktop-icon" onclick="openWindow('about-window')">
-            <div class="icon-img">🪐</div>
-            <span>About OS</span>
-        </div>
-        <div class="desktop-icon" onclick="openWindow('terminal-window')">
-            <div class="icon-img">💻</div>
-            <span>Terminal</span>
-        </div>
+        <h1>Welcome to Hydro OS</h1>
+        <button onclick="alert('Hello from Hydro OS!')">Click Me</button>
     </div>
-
-    <!-- Windows / Apps -->
-    <div id="about-window" class="window">
-        <div class="window-header">
-            <span>About Hydro OS</span>
-            <button class="close-btn" onclick="closeWindow('about-window')">&times;</button>
-        </div>
-        <div class="window-body">
-            <h2>Welcome to Hydro OS</h2>
-            <p>Explore your digital universe. Built with pure HTML, CSS, and JS.</p>
-        </div>
-    </div>
-
-    <div id="terminal-window" class="window">
-        <div class="window-header">
-            <span>Terminal</span>
-            <button class="close-btn" onclick="closeWindow('terminal-window')">&times;</button>
-        </div>
-        <div class="window-body terminal-body">
-            <p>Hydro OS v1.0.0 (x86_web-server)</p>
-            <p>Type 'help' for available commands.</p>
-            <div id="terminal-output"></div>
-            <div class="terminal-input-line">
-                <span>guest@hydro-os:~$</span>
-                <input type="text" id="terminal-input" autofocus autocomplete="off" onkeypress="handleTerminal(event)">
-            </div>
-        </div>
-    </div>
-
-    <!-- Taskbar -->
-    <div id="taskbar">
-        <button id="start-btn" onclick="toggleMenu()">💧 Start</button>
-        <div id="taskbar-apps"></div>
-        <div id="clock">00:00</div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
