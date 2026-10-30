@@ -1,14 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hydro OS</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div id="desktop">
-        <h1>Welcome to Hydro OS</h1>
-        <button onclick="alert('Hello from Hydro OS!')">Click Me</button>
+
+    <div class="desktop">
+
+        <header class="topbar">
+            <h2>🚀 HYDRO OS</h2>
+            <span id="clock">00:00</span>
+        </header>
+
+        <div class="icons">
+            <button onclick="openApp('clockApp')">
+                🕒<br>Clock
+            </button>
+
+            <button onclick="openApp('calendarApp')">
+                📅<br>Calendar
+            </button>
+
+            <button onclick="openApp('terminalApp')">
+                💻<br>Terminal
+            </button>
+
+            <button onclick="openApp('aboutApp')">
+                🌍<br>About
+            </button>
+        </div>
+
+        <!-- Clock window -->
+        <div class="window" id="clockApp">
+            <div class="window-head">
+                Clock
+                <button onclick="closeApp('clockApp')">×</button>
+            </div>
+            <div class="content">
+                <h1 id="bigClock">00:00:00</h1>
+                <p id="date"></p>
+            </div>
+        </div>
+
+        <!-- Calendar window -->
+        <div class="window" id="calendarApp">
+            <div class="window-head">
+                Calendar
+                <button onclick="closeApp('calendarApp')">×</button>
+            </div>
+            <div class="content">
+                <h2 id="month"></h2>
+                <div id="calendar"></div>
+            </div>
+        </div>
+
+        <!-- Terminal window -->
+        <div class="window" id="terminalApp">
+            <div class="window-head">
+                Terminal
+                <button onclick="closeApp('terminalApp')">×</button>
+            </div>
+            <div class="content terminal">
+                <div id="output">
+                    Welcome to Hydro Terminal!<br>
+                    Type help to see commands.
+                </div>
+
+                <div class="command-line">
+                    <span>hydro&gt;</span>
+                    <input id="command" placeholder="Type here">
+                </div>
+            </div>
+        </div>
+
+        <!-- About window -->
+        <div class="window" id="aboutApp">
+            <div class="window-head">
+                About Hydro OS
+                <button onclick="closeApp('aboutApp')">×</button>
+            </div>
+            <div class="content">
+                <h2>🌌 Hydro OS</h2>
+                <p>A space-themed desktop simulation.</p>
+                <p>Created as a student coding project.</p>
+                <p>Explore. Imagine. Invent.</p>
+            </div>
+        </div>
+
+        <!-- Start menu -->
+        <div class="start-menu" id="startMenu">
+            <h3>🚀 Hydro OS</h3>
+            <button onclick="openApp('clockApp')">🕒 Clock</button>
+            <button onclick="openApp('calendarApp')">📅 Calendar</button>
+            <button onclick="openApp('terminalApp')">💻 Terminal</button>
+            <button onclick="openApp('aboutApp')">🌍 About</button>
+        </div>
+
+        <footer class="taskbar">
+            <button onclick="toggleMenu()">🌌 Start</button>
+            <span>HYDRO DESKTOP</span>
+            <span id="bottomClock"></span>
+        </footer>
+
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
