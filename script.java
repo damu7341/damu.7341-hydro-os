@@ -1,5 +1,5 @@
-// Turbo OS - simple web desktop
-// Version 1.0 - made by Preetham
+// hydro OS - simple web desktop
+// Version 1.0 - made by damodhar
 
 var desktop = document.getElementById("desktop");
 var menu = document.getElementById("menu");
@@ -348,10 +348,10 @@ function openAbout() {
   var box = makeWindow("about", "About Me", 340, 260);
   if (!box) return;
 
-  box.innerHTML =
-    "<h2>Turbo OS</h2>" +
-    "<p><b>Builder:</b> Preetham</p>" +
-    "<p><b>Description:</b> A small black and classic styled web OS built with plain HTML, CSS and JavaScript.</p>" +
+  box.innerHTML =>"
+    "<h2>hydro OS</h2>" +
+    "<p><b>Builder:</b> damodhar</p>" +
+    "<p><b>Description:</b> A small black and classic styled web OS built with plain HTML, CSS and JavaScript.</p +
     "<p><b>Version:</b> 1.0</p>" +
-    "<p><b>Copyright:</b> &copy; 2026 Preetham. All rights reserved.</p>";
+    "<p><b>Copyright:</b> &copy; 2026 damodhar. All rights reserved.</p>";
 }
