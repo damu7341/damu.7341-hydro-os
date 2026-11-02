@@ -6,73 +6,46 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="topbar"><div>Hydro S - Space Edition</div><div><span id="visits"></span> | <span id="time"></span></div></div>
 
-<div class="topbar">
-  <div>Hydro S - Space Edition</div>
-  <div style="display:flex; gap:15px;"><span id="bat"></span><span id="visitCount"></span><span id="topTime"></span></div>
-</div>
+<div class="widgets">
+  <div class="widget" id="w-clock">
+    <h3>CLOCK WIDGET</h3>
+    <div id="clock">00:00</div>
+    <div id="date"></div>
+  </div>
 
-<div class="window" id="clockWin">
-  <div class="win-header"><span>Clock</span><span class="close" onclick="closeWin('clockWin')">x</span></div>
-  <div class="win-body"><div id="clockDisplay"></div><div id="dateDisplay" style="text-align:center; opacity:0.8;"></div></div>
-</div>
+  <div class="widget" id="w-cal">
+    <h3>CALENDAR WIDGET</h3>
+    <div id="calTitle"></div>
+    <div class="calendar" id="calGrid"></div>
+  </div>
 
-<div class="window" id="calWin">
-  <div class="win-header"><span>Calendar</span><span class="close" onclick="closeWin('calWin')">x</span></div>
-  <div class="win-body"><div id="calTitle" style="text-align:center; font-weight:bold;"></div><div class="calendar-grid" id="calGrid"></div></div>
-</div>
-
-<div class="window" id="calcWin">
-  <div class="win-header"><span>Calculator</span><span class="close" onclick="closeWin('calcWin')">x</span></div>
-  <div class="win-body">
-    <input type="text" class="calc-display" id="calcDisplay" readonly>
-    <div class="calc-keys">
-      <button onclick="clearCalc()">C</button>
-      <button onclick="appendCalc('/')">/</button>
-      <button onclick="appendCalc('*')">*</button>
-      <button onclick="backCalc()">⌫</button>
-      <button onclick="appendCalc('7')">7</button>
-      <button onclick="appendCalc('8')">8</button>
-      <button onclick="appendCalc('9')">9</button>
-      <button class="op" onclick="appendCalc('-')">-</button>
-      <button onclick="appendCalc('4')">4</button>
-      <button onclick="appendCalc('5')">5</button>
-      <button onclick="appendCalc('6')">6</button>
-      <button class="op" onclick="appendCalc('+')">+</button>
-      <button onclick="appendCalc('1')">1</button>
-      <button onclick="appendCalc('2')">2</button>
-      <button onclick="appendCalc('3')">3</button>
-      <button class="equal" onclick="doCalc()">=</button>
-      <button onclick="appendCalc('0')">0</button>
-      <button onclick="appendCalc('00')">00</button>
-      <button onclick="appendCalc('.')">.</button>
-      <button onclick="appendCalc('%')">%</button>
+  <div class="widget" id="w-calc">
+    <h3>CALCULATOR WIDGET</h3>
+    <input id="calcOut" readonly placeholder="0">
+    <div class="keys">
+      <button onclick="cPress('7')">7</button><button onclick="cPress('8')">8</button><button onclick="cPress('9')">9</button><button onclick="cPress('/')">/</button>
+      <button onclick="cPress('4')">4</button><button onclick="cPress('5')">5</button><button onclick="cPress('6')">6</button><button onclick="cPress('*')">*</button>
+      <button onclick="cPress('1')">1</button><button onclick="cPress('2')">2</button><button onclick="cPress('3')">3</button><button onclick="cPress('-')">-</button>
+      <button onclick="cPress('0')">0</button><button onclick="cPress('.')">.</button><button onclick="cEqual()">=</button><button onclick="cPress('+')">+</button>
+      <button onclick="cClear()" class="span2">CLEAR</button><button onclick="cBack()">⌫</button><button onclick="cPress('%')">%</button>
     </div>
   </div>
-</div>
 
-<div class="window" id="notesWin">
-  <div class="win-header"><span>Notes</span><span class="close" onclick="closeWin('notesWin')">x</span></div>
-  <div class="win-body">
-    <textarea id="notesArea" placeholder="write your space notes..."></textarea><br><br>
-    <button class="btn" onclick="saveNotes()">Save</button>
-    <div id="quote" style="margin-top:10px; font-size:11px; opacity:0.7;"></div>
+  <div class="widget" id="w-notes">
+    <h3>NOTES WIDGET</h3>
+    <textarea id="notes" placeholder="Space notes..."></textarea>
+    <button onclick="saveN()" class="saveBtn">Save</button>
   </div>
-</div>
-
-<div class="window" id="termWin">
-  <div class="win-header"><span>Terminal</span><span class="close" onclick="closeWin('termWin')">x</span></div>
-  <div class="terminal-body" id="termBody">Welcome to Hydro S<br>Type help<br><br></div>
-  <div style="display:flex; background:black; padding:5px 10px;"><span style="color:#00ff88;">></span><input type="text" id="termInput"></div>
 </div>
 
 <div class="taskbar">
-  <button class="btn" onclick="toggleWin('clockWin')">Clock</button>
-  <button class="btn" onclick="toggleWin('calWin')">Calendar</button>
-  <button class="btn" onclick="toggleWin('calcWin')">Calculator</button>
-  <button class="btn" onclick="toggleWin('notesWin')">Notes</button>
-  <button class="btn" onclick="toggleWin('termWin')">Terminal</button>
-  <button class="btn" onclick="changeWall()">Wallpaper</button>
+  <button onclick="toggleW('w-clock')">Clock</button>
+  <button onclick="toggleW('w-cal')">Calendar</button>
+  <button onclick="toggleW('w-calc')">Calculator</button>
+  <button onclick="toggleW('w-notes')">Notes</button>
+  <button onclick="changeBG()">Wallpaper</button>
 </div>
 
 <script src="script.js"></script>
