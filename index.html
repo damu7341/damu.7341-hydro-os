@@ -1,40 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>hydr oOS</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Hydro S - Web OS</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: Segoe UI, sans-serif; }
+body { 
+    background: url('https://images.unsplash.com/photo-1531306728370-e2ebd9d7bb99?q=80&w=1974') no-repeat center center fixed;
+    background-size: cover;
+    height:100vh; color:white; overflow:hidden; 
+}
+.topbar { height:40px; background:rgba(0,0,0,0.5); display:flex; justify-content:space-between; align-items:center; padding:0 15px; backdrop-filter:blur(5px); }
+.taskbar { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.15); backdrop-filter:blur(10px); padding:10px 20px; border-radius:30px; display:flex; gap:15px; }
+.btn { background:rgba(255,255,255,0.2); border:none; color:white; padding:10px 18px; border-radius:20px; cursor:pointer; }
+.btn:hover { background:rgba(255,255,255,0.35); }
+.window { position:absolute; background:#1e1e1e; border-radius:12px; width:320px; display:none; flex-direction:column; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+.window.active { display:flex; }
+.win-header { background:#2d2d2d; padding:10px; display:flex; justify-content:space-between; border-radius:12px 12px 0 0; }
+.close { cursor:pointer; color:#ff5f56; font-weight:bold; }
+.win-body { padding:15px; }
+#clockWin { top:80px; left:50px; }
+#calWin { top:80px; right:50px; width:340px; }
+#termWin { bottom:100px; left:50%; transform:translateX(-50%); width:500px; height:300px; }
+#clockDisplay { font-size:42px; text-align:center; margin:10px 0; }
+.calendar-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:10px; }
+.day-name { opacity:0.5; font-size:12px; text-align:center; }
+.day { text-align:center; padding:6px; border-radius:6px; font-size:14px; }
+.day.today { background:#302b63; font-weight:bold; }
+.terminal-body { background:black; color:#00ff88; flex:1; padding:10px; overflow-y:auto; font-family:Consolas, monospace; font-size:13px; }
+.term-input-row { display:flex; background:black; padding:5px 10px; }
+#termInput { background:transparent; border:none; color:white; flex:1; outline:none; font-family:Consolas, monospace; }
+</style>
 </head>
 <body>
-  <!-- Windows get added here by script.js -->
-  <div id="desktop">
-    <!-- Desktop icons (click to open) -->
-    <div id="icons">
-      <div class="icon" onclick="openApp('clock')"><span>&#128339;</span>Clock</div>
-      <div class="icon" onclick="openApp('calculator')"><span>&#129518;</span>Calculator</div>
-      <div class="icon" onclick="openApp('terminal')"><span>&#128187;</span>Terminal</div>
-      <div class="icon" onclick="openApp('browser')"><span>&#127760;</span>Browser</div>
-      <div class="icon" onclick="openApp('about')"><span>&#128100;</span>About Me</div>
-    </div>
-  </div>
-
-  <!-- Start menu (hidden until Turbo is clicked) -->
-  <div id="menu" class="hidden">
-    <div onclick="openApp('clock')">Clock &amp; Calendar</div>
-    <div onclick="openApp('calculator')">Calculator</div>
-    <div onclick="openApp('terminal')">Terminal</div>
-    <div onclick="openApp('browser')">Browser</div>
-    <div onclick="openApp('about')">About Me</div>
-  </div>
-
-  <!-- Taskbar -->
-  <div id="taskbar">
-    <button id="hydro-btn">hydro</button>
-    <div id="tasks"></div>
-    <div id="datetime"></div>
-  </div>
-
-  <script src="script.js"></script>
+<div class="topbar"><div class="logo">Hydro S - Space Edition</div><div style="display:flex; gap:15px;"><span id="visitCount"></span><span id="topTime">--:--</span></div></div>
+<div class="window" id="clockWin"><div class="win-header"><span>Clock</span><span class="close" onclick="closeWin('clockWin')">x</span></div><div class="win-body"><div id="clockDisplay">00:00:00</div><div id="dateDisplay"></div></div></div>
+<div class="window" id="calWin"><div class="win-header"><span>Calendar</span><span class="close" onclick="closeWin('calWin')">x</span></div><div class="win-body"><div id="calTitle" style="text-align:center; font-weight:bold;"></div><div class="calendar-grid" id="calGrid"></div></div></div>
+<div class="window" id="termWin"><div class="win-header"><span>Terminal - Hydro S</span><span class="close" onclick="closeWin('termWin')">x</span></div><div class="terminal-body" id="termBody">Welcome to Hydro S Terminal<br>Type 'help' for commands<br><br></div><div class="term-input-row"><span>></span><input type="text" id="termInput" placeholder="type command..."></div></div>
+<div class="taskbar"><button class="btn" onclick="toggleWin('clockWin')">Clock</button><button class="btn" onclick="toggleWin('calWin')">Calendar</button><button class="btn" onclick="toggleWin('termWin')">Terminal</button></div>
+<script>
+function updateTime(){let now=new Date();document.getElementById('clockDisplay').innerText=now.toLocaleTimeString();document.getElementById('topTime').innerText=now.toLocaleTimeString().slice(0,5);document.getElementById('dateDisplay').innerText=now.toDateString();}
+function buildCalendar(){let now=new Date(),year=now.getFullYear(),month=now.getMonth();let firstDay=new Date(year,month,1).getDay(),days=new Date(year,month+1,0).getDate();document.getElementById('calTitle').innerText=now.toLocaleString('default',{month:'long',year:'numeric'});let grid=document.getElementById('calGrid');grid.innerHTML='';['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(n=>{let d=document.createElement('div');d.className='day-name';d.innerText=n;grid.appendChild(d);});for(let i=0;i<firstDay;i++){let d=document.createElement('div');d.className='day';grid.appendChild(d);}for(let i=1;i<=days;i++){let d=document.createElement('div');d.className='day';d.innerText=i;if(i===now.getDate())d.classList.add('today');grid.appendChild(d);}}
+function toggleWin(id){document.getElementById(id).classList.toggle('active');}function closeWin(id){document.getElementById(id).classList.remove('active');}
+let visits=localStorage.getItem('hydroVisits');visits=visits?parseInt(visits)+1:1;localStorage.setItem('hydroVisits',visits);document.getElementById('visitCount').innerText='Visits: '+visits;
+let termInput=document.getElementById('termInput'),termBody=document.getElementById('termBody');
+termInput.addEventListener('keydown',function(e){if(e.key==='Enter'){let cmd=this.value.trim().toLowerCase(),out=document.createElement('div');out.innerHTML='> '+this.value+'<br>';let now=new Date();if(cmd==='help')out.innerHTML+='Commands: help, time, date, clear, echo [text], hydro, visits';else if(cmd==='time')out.innerHTML+='Local Time: '+now.toLocaleTimeString();else if(cmd==='date')out.innerHTML+='Local Date: '+now.toLocaleDateString();else if(cmd==='clear'){termBody.innerHTML='';this.value='';return;}else if(cmd.startsWith('echo '))out.innerHTML+=this.value.slice(5);else if(cmd==='hydro')out.innerHTML+='Hydro S v1.0 - Light Web OS';else if(cmd==='visits')out.innerHTML+='Total visits: '+visits;else if(cmd!=='')out.innerHTML+='Unknown command: '+cmd;out.innerHTML+='<br><br>';termBody.appendChild(out);termBody.scrollTop=termBody.scrollHeight;this.value='';}});
+setInterval(updateTime,1000);updateTime();buildCalendar();
+</script>
 </body>
-                              </html>
-                              
+</html>
